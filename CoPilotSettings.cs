@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
@@ -278,6 +278,20 @@ namespace CoPilot
         public RangeNode<int> customEsp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> customCooldown = new RangeNode<int>(4000, 1000, 10000);
         public HotkeyNode customKey = new HotkeyNode(Keys.T);
+
+        #endregion
+
+        #region Custom1 Skill
+
+        public ToggleNode custom1Enabled = new ToggleNode(false);
+        public RangeNode<int> custom1TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom1MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom1MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom1MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom1Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom1Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom1Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom1Key = new HotkeyNode(Keys.T);
 
         #endregion
 
