@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -39,6 +39,7 @@ namespace CoPilot
         private bool isMoving;
         private DateTime lastCurse;
         private DateTime lastCustom;
+        private DateTime lastCustom1;
         private DateTime lastDelveFlare;
         private DateTime lastStackSkill;
         internal DateTime lastTimeAny;
@@ -1104,6 +1105,29 @@ namespace CoPilot
                             {
                                 Keyboard.KeyPress(Settings.customKey);
                                 lastCustom = DateTime.Now;
+                            }
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                #endregion
+
+                #region Custom1 Skill
+
+                if (Settings.custom1Enabled)
+                    try
+                    {
+                        if (Gcd() &&
+                            (DateTime.Now - lastCustom1).TotalMilliseconds > Settings.custom1Cooldown.Value &&
+                            MonsterCheck(Settings.custom1TriggerRange, Settings.custom1MinAny, Settings.custom1MinRare,
+                                Settings.custom1MinUnique))
+                            if (player.HPPercentage <= (float)Settings.custom1Hpp / 100 ||
+                                player.MaxES > 0 && player.ESPercentage <
+                                (float)Settings.custom1Esp / 100)
+                            {
+                                Keyboard.KeyPress(Settings.custom1Key);
+                                lastCustom1 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
