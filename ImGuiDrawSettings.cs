@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
@@ -610,6 +610,38 @@ namespace CoPilot
                         ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.customMinRare);
                     CoPilot.instance.Settings.customMinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
                         CoPilot.instance.Settings.customMinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+
+
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom1Enabled ? green : red);
+                ImGui.PushID(27);
+                if (ImGui.TreeNodeEx("Custom1 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom1Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom1Enabled.Value);
+                    CoPilot.instance.Settings.custom1Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom1Key.Value, CoPilot.instance.Settings.custom1Key);
+                    CoPilot.instance.Settings.custom1Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom1Cooldown);
+                    CoPilot.instance.Settings.custom1TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom1TriggerRange);
+                    CoPilot.instance.Settings.custom1Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom1Hpp);
+                    CoPilot.instance.Settings.custom1Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom1Esp);
+                    CoPilot.instance.Settings.custom1MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom1MinAny);
+                    CoPilot.instance.Settings.custom1MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom1MinRare);
+                    CoPilot.instance.Settings.custom1MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom1MinUnique);
                 }
             }
             catch (Exception e)
