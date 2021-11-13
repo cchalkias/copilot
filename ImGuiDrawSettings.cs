@@ -649,6 +649,70 @@ namespace CoPilot
                 CoPilot.instance.LogError(e.ToString());
             }
 
+            
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom2Enabled ? green : red);
+                ImGui.PushID(27);
+                if (ImGui.TreeNodeEx("Custom2 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom2Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom2Enabled.Value);
+                    CoPilot.instance.Settings.custom2Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom2Key.Value, CoPilot.instance.Settings.custom2Key);
+                    CoPilot.instance.Settings.custom2Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom2Cooldown);
+                    CoPilot.instance.Settings.custom2TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom2TriggerRange);
+                    CoPilot.instance.Settings.custom2Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom2Hpp);
+                    CoPilot.instance.Settings.custom2Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom2Esp);
+                    CoPilot.instance.Settings.custom2MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom2MinAny);
+                    CoPilot.instance.Settings.custom2MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom2MinRare);
+                    CoPilot.instance.Settings.custom2MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom2MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+
+            
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom3Enabled ? green : red);
+                ImGui.PushID(27);
+                if (ImGui.TreeNodeEx("Custom3 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom3Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom3Enabled.Value);
+                    CoPilot.instance.Settings.custom3Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom3Key.Value, CoPilot.instance.Settings.custom3Key);
+                    CoPilot.instance.Settings.custom3Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom3Cooldown);
+                    CoPilot.instance.Settings.custom3TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom3TriggerRange);
+                    CoPilot.instance.Settings.custom3Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom3Hpp);
+                    CoPilot.instance.Settings.custom3Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom3Esp);
+                    CoPilot.instance.Settings.custom3MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom3MinAny);
+                    CoPilot.instance.Settings.custom3MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom3MinRare);
+                    CoPilot.instance.Settings.custom3MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom3MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+
             try
             {
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.brandRecallEnabled ? green : red);
