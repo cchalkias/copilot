@@ -294,6 +294,36 @@ namespace CoPilot
         public HotkeyNode custom1Key = new HotkeyNode(Keys.T);
 
         #endregion
+        
+        #region Custom2 Skill
+
+        public ToggleNode custom2Enabled = new ToggleNode(false);
+        public RangeNode<int> custom2TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom2MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom2MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom2MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom2Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom2Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom2Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom2Key = new HotkeyNode(Keys.T);
+
+        #endregion
+        
+        #region Custom3 Skill
+
+        public ToggleNode custom3Enabled = new ToggleNode(false);
+        public RangeNode<int> custom3TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom3MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom3MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom3MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom3Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom3Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom3Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom3Key = new HotkeyNode(Keys.T);
+
+        #endregion
+        
+        
 
         #region Brand Recall
 
