@@ -671,7 +671,7 @@ namespace CoPilot
                                     if (!skill.Stats.TryGetValue(GameStat.NumberOfRelicsAllowed, out var maxRelics))
                                         maxRelics = 1;
                                     
-                                    if (summons.holyRelics < 2)
+                                    if (summons.holyRelics < maxRelics)
                                     {
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                         SkillInfo.autoSummon.Cooldown = 2000;
