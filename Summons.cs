@@ -53,7 +53,7 @@ namespace CoPilot
                     dropBearUniqueSummoned++;
                 else if (obj.Entity.Metadata.Contains("RaisedZombie"))
                     zombies++;
-                else if (obj.Entity.Metadata.EndsWith("HolyLivingRelics")) holyRelics++;
+                else if (obj.Entity.Metadata.EndsWith("Relics")) holyRelics++;
         }
 
         public static float GetLowestMinionHpp()
