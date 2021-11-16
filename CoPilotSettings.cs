@@ -194,7 +194,7 @@ namespace CoPilot
 
         public ToggleNode autoSummonEnabled = new ToggleNode(false);
         public ToggleNode autoGolemEnabled = new ToggleNode(false);
-        public ToggleNode autoHolyRelictEnabled = new ToggleNode(false);
+        public ToggleNode autoHolyRelicEnabled = new ToggleNode(false);
 
 
         public RangeNode<int> autoGolemChaosMax = new RangeNode<int>(0, 0, 15);
