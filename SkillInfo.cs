@@ -53,7 +53,7 @@ namespace CoPilot
         internal static Skill bladeVortex = new Skill();
         internal static Skill plagueBearer = new Skill();
         internal static Skill bladeBlast = new Skill();
-        internal static Skill holyRelics = new Skill();
+        internal static Skill holyRelic = new Skill();
         internal static Skill berserk = new Skill();
         internal static Skill sweep = new Skill();
         internal static Skill witherStep = new Skill();
@@ -284,7 +284,7 @@ namespace CoPilot
                         bladeBlast.Id = skill.Id;
                         break;
                     case "summon_relics":
-                        holyRelics.Id = skill.Id;
+                        holyRelic.Id = skill.Id;
                         break;
                     case "berserk":
                         berserk.Id = skill.Id;
