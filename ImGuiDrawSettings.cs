@@ -261,8 +261,8 @@ namespace CoPilot
                         CoPilot.instance.Settings.autoSummonEnabled.Value);
                     CoPilot.instance.Settings.autoGolemEnabled.Value = ImGuiExtension.Checkbox("Auto Golem",
                         CoPilot.instance.Settings.autoGolemEnabled.Value);
-                    CoPilot.instance.Settings.autoHolyRelictEnabled.Value = ImGuiExtension.Checkbox("Auto Holy Relict",
-                        CoPilot.instance.Settings.autoHolyRelictEnabled.Value);
+                    CoPilot.instance.Settings.autoHolyRelicEnabled.Value = ImGuiExtension.Checkbox("Auto Holy Relic",
+                        CoPilot.instance.Settings.autoHolyRelicEnabled.Value);
                     CoPilot.instance.Settings.autoZombieEnabled.Value = ImGuiExtension.Checkbox("Auto Zombies",
                         CoPilot.instance.Settings.autoZombieEnabled.Value);
                     CoPilot.instance.Settings.autoGolemAvoidRange.Value =
