@@ -10,7 +10,7 @@ namespace CoPilot
         internal int chaosElemental;
         internal int dropBearUniqueSummoned;
         internal int fireElemental;
-        internal int holyRelics;
+        internal int holyRelic;
         internal int iceElemental;
 
         private DateTime lastUpdate = DateTime.Now;
@@ -53,7 +53,7 @@ namespace CoPilot
                     dropBearUniqueSummoned++;
                 else if (obj.Entity.Metadata.Contains("RaisedZombie"))
                     zombies++;
-                else if (obj.Entity.Metadata.EndsWith("Relics")) holyRelics++;
+                else if (obj.Entity.Metadata.EndsWith("Relics")) holyRelic++;
         }
 
         public static float GetLowestMinionHpp()
