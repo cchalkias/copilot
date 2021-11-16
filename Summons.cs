@@ -10,7 +10,7 @@ namespace CoPilot
         internal int chaosElemental;
         internal int dropBearUniqueSummoned;
         internal int fireElemental;
-        internal int holyRelic;
+        internal int holyRelics;
         internal int iceElemental;
 
         private DateTime lastUpdate = DateTime.Now;
@@ -33,7 +33,7 @@ namespace CoPilot
             boneGolem = 0;
             dropBearUniqueSummoned = 0;
             zombies = 0;
-            holyRelic = 0;
+            holyRelics = 0;
 
             foreach (var obj in CoPilot.instance.localPlayer.GetComponent<Actor>().DeployedObjects
                 .Where(x => x?.Entity != null && x.Entity.IsAlive))
@@ -53,7 +53,7 @@ namespace CoPilot
                     dropBearUniqueSummoned++;
                 else if (obj.Entity.Metadata.Contains("RaisedZombie"))
                     zombies++;
-                else if (obj.Entity.Metadata.EndsWith("Relics")) holyRelic++;
+                else if (obj.Entity.Metadata.EndsWith("Relics")) holyRelics++;
         }
 
         public static float GetLowestMinionHpp()
