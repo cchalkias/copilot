@@ -328,9 +328,8 @@ namespace CoPilot
                     !GameController.InGame || GameController.IsLoading) return;
                 
                 enemys = GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster].Where(x =>
-                    x != null && x.IsAlive && x.IsHostile && x.HasComponent<Targetable>() &&
-                    x.GetComponent<Targetable>().isTargetable && x.HasComponent<Life>() &&
-                    x.GetComponent<Life>().CurHP > 0 && !HasStat(x, GameStat.CannotBeDamaged) &&
+                    x != null && x.IsAlive && x.IsHostile && x.GetComponent<Life>()?.CurHP > 0 && 
+                    x.GetComponent<Targetable>()?.isTargetable == true && !HasStat(x, GameStat.CannotBeDamaged) &&
                     GameController.Window.GetWindowRectangleTimeCache.Contains(
                         GameController.Game.IngameState.Camera.WorldToScreen(x.Pos))).ToList();
                 if (Settings.debugMode)
