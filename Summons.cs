@@ -37,7 +37,7 @@ namespace CoPilot
             boneGolem = 0;
             dropBearUniqueSummoned = 0;
             zombies = 0;
-            holyRelict = 0;
+            holyRelic = 0;
 
             foreach (var obj in summonedObjects
                 .Where(x => x?.Entity?.IsAlive == true))
