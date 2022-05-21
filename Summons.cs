@@ -18,12 +18,16 @@ namespace CoPilot
         internal int rockGolem;
         internal int zombies;
 
-        internal void UpdateSummons()
+       internal void UpdateSummons()
         {
+            var summonedObjects = CoPilot.instance.localPlayer.GetComponent<Actor>().DeployedObjects;
+
             if ((DateTime.Now - lastUpdate).TotalMilliseconds < 250 ||
-                CoPilot.instance.localPlayer?.GetComponent<Actor>() == null)
+                summonedObjects == null)
+            {
+                lastUpdate = DateTime.Now;
                 return;
-            lastUpdate = DateTime.Now;
+            }
 
             chaosElemental = 0;
             fireElemental = 0;
