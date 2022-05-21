@@ -10,7 +10,7 @@ namespace CoPilot
         internal int chaosElemental;
         internal int dropBearUniqueSummoned;
         internal int fireElemental;
-        internal int holyRelic;
+        internal int holyRelict;
         internal int iceElemental;
 
         private DateTime lastUpdate = DateTime.Now;
@@ -37,7 +37,7 @@ namespace CoPilot
             boneGolem = 0;
             dropBearUniqueSummoned = 0;
             zombies = 0;
-            holyRelic = 0;
+            holyRelict = 0;
 
             foreach (var obj in summonedObjects
                 .Where(x => x?.Entity?.IsAlive == true))
