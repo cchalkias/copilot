@@ -664,13 +664,13 @@ namespace CoPilot
                                     }
                                 }
 
-                                if (Settings.autoHolyRelicsEnabled && skill.Id == SkillInfo.holyRelics.Id)
+                                if (Settings.autoHolyRelicsEnabled && skill.Id == SkillInfo.holyRelicts.Id)
                                 {
                                     // Seems maxRelics is no longer available when its default value
                                     if (!skill.Stats.TryGetValue(GameStat.NumberOfRelicsAllowed, out var maxRelics))
                                         maxRelics = 1;
                                     
-                                    if (summons.holyRelics < maxRelics)
+                                    if (summons.holyRelicts < maxRelics)
                                     {
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                         SkillInfo.autoSummon.Cooldown = 2000;
