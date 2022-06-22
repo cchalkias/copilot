@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using ExileCore;
 using ExileCore.PoEMemory.Components;
@@ -52,6 +53,11 @@ namespace CoPilot
         internal List<ActorSkill> skills = new List<ActorSkill>();
         private bool updateBladeBlast;
         private List<ActorVaalSkill> vaalSkills = new List<ActorVaalSkill>();
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hwnd, StringBuilder ss, int count);
 
         
 
@@ -260,7 +266,7 @@ namespace CoPilot
             var coroutine = new Coroutine(WaitForSkillsAfterAreaChange(), this);
             Core.ParallelRunner.Run(coroutine);
             
-            autoPilot.AreaChange();
+            //autoPilot.AreaChange();
         }
         
         public override void DrawSettings()
@@ -283,6 +289,16 @@ namespace CoPilot
             {
                 return false;
             }
+        }
+
+        private static string ActiveWindowTitle()
+        {
+            const int nChar = 256;
+            StringBuilder ss = new StringBuilder(nChar);
+            IntPtr handle = IntPtr.Zero;
+            handle = GetForegroundWindow();
+            if (GetWindowText(handle, ss, nChar) > 0) return ss.ToString();
+            else return "";
         }
 
         public override void Render()
@@ -320,21 +336,51 @@ namespace CoPilot
                 skills = localPlayer.GetComponent<Actor>().ActorSkills;
                 vaalSkills = localPlayer.GetComponent<Actor>().ActorVaalSkills;
                 playerPosition = localPlayer.Pos;
+                int offset = (20 * (skills.Count));
+                int vaalOffset = (20 * (vaalSkills.Count));
+                if (Settings.debugMode)
+                {
+                    Graphics.DrawText("isAttacking: " + isAttacking, new Vector2(10, 120), Color.White);
+                    Graphics.DrawText("isCasting: " + isCasting, new Vector2(10, 140), Color.White);
+                    Graphics.DrawText("isMoving: " + isMoving, new Vector2(10, 160), Color.White);
+                    Graphics.DrawText("Skills: \n" + String.Join("\n", skills), new Vector2(10, 180), Color.White);
+                    Graphics.DrawText("VaalSkills: \n" + String.Join("\n", vaalSkills), new Vector2(10, 200 + offset + vaalOffset), Color.White);
+                    vaalOffset = vaalOffset + (vaalSkills.Count * 20);
+                    Graphics.DrawText("PlayerPosition: " + playerPosition, new Vector2(10, 220 + offset), Color.White);
+                    Graphics.DrawText("ActiveWindowTitle: " + ActiveWindowTitle(), new Vector2(10, 240 + offset), Color.White);
+                }
 
-                if (GameController.Area.CurrentArea.IsHideout || GameController.Area.CurrentArea.IsTown ||
-                    /*GameController.IngameState.IngameUi.StashElement.IsVisible ||*/ // 3.15 Null
+                if (ActiveWindowTitle().IndexOf("Path of Exile", 0, StringComparison.CurrentCultureIgnoreCase) == -1 ||
+                    GameController.Area.CurrentArea.IsHideout || GameController.Area.CurrentArea.IsTown ||
+                    GameController.IngameState.IngameUi.StashElement.IsVisible ||
                     GameController.IngameState.IngameUi.NpcDialog.IsVisible ||
                     GameController.IngameState.IngameUi.SellWindow.IsVisible || MenuWindow.IsOpened ||
-                    !GameController.InGame || GameController.IsLoading) return;
+                    !GameController.InGame || GameController.IsLoading)
+                {
+                    if (Settings.debugMode)
+                        Graphics.DrawText("Return reason: " + (ActiveWindowTitle().IndexOf("Path of Exile", 0, StringComparison.CurrentCultureIgnoreCase) == -1 ? "POE Not Active Window" : 
+                            GameController.Area.CurrentArea.IsHideout ? "In hideout" : 
+                            GameController.Area.CurrentArea.IsTown ? "In town" :
+                            GameController.IngameState.IngameUi.StashElement.IsVisible ? "Stash element is visible" :
+                            GameController.IngameState.IngameUi.NpcDialog.IsVisible ? "NPC Dialog is visible" :
+                            GameController.IngameState.IngameUi.SellWindow.IsVisible ? "Sell window is visible" :
+                            MenuWindow.IsOpened ? "Settings window is opened" :
+                            !GameController.InGame ? "Not in-game" :
+                            GameController.IsLoading ? "Game is loading" : "Unknown"), new Vector2(10, 260 + offset), Color.White);
+                    return;
+                }
                 
                 enemys = GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster].Where(x =>
-                    x != null && x.IsAlive && x.IsHostile && x.GetComponent<Life>()?.CurHP > 0 && 
-                    x.GetComponent<Targetable>()?.isTargetable == true && !HasStat(x, GameStat.CannotBeDamaged) &&
+                    x != null && x.IsAlive && x.IsHostile && x.HasComponent<Targetable>() &&
+                    x.GetComponent<Targetable>().isTargetable && x.HasComponent<Life>() &&
+                    x.GetComponent<Life>().CurHP > 0 && !HasStat(x, GameStat.CannotBeDamaged) &&
                     GameController.Window.GetWindowRectangleTimeCache.Contains(
                         GameController.Game.IngameState.Camera.WorldToScreen(x.Pos))).ToList();
                 if (Settings.debugMode)
                 {
-                    Graphics.DrawText("Enemys: " + enemys.Count, new Vector2(100, 120), Color.White);
+                    Graphics.DrawText("Enemies: " + enemys.Count, new Vector2(1500, 200), Color.White);
+                    Graphics.DrawText("Buffs: \n" + String.Join("\n", buffs), new Vector2(1500, 220), Color.White);
+                    offset = (20 * buffs.Count);
                 }
                 
                 if (Settings.offeringsEnabled || Settings.autoZombieEnabled || Settings.generalCryEnabled)
@@ -397,9 +443,25 @@ namespace CoPilot
                     /*GameController.IngameState.IngameUi.ChatBoxRoot.Parent.Parent.Parent.GetChildAtIndex(3).IsVisible || */ // 3.15 Bugged 
                     !GameController.IsForeGroundCache)
                     return;
-                
-                foreach (var skill in skills.Where(skill => skill.IsOnSkillBar && skill.SkillSlotIndex >= 1 && skill.SkillSlotIndex != 2 && skill.CanBeUsed))
+
+                foreach (var skill in skills)
                 {
+                    if (skill.Name != "")
+                    {
+                        if (!skill.IsOnSkillBar || skill.SkillSlotIndex < 1 || skill.SkillSlotIndex == 2 || !skill.CanBeUsed)
+                        {
+                            if (Settings.debugMode)
+                            {
+                                Graphics.DrawText("Skill skip reason: Can't cast skill '" + skill.Name + "': " +
+                                    (!skill.IsOnSkillBar ? "Not on skill bar" :
+                                    skill.SkillSlotIndex < 1 ? "Skill slot index < 1" :
+                                    skill.SkillSlotIndex == 2 ? "Skill slot index == 2" :
+                                    !skill.CanBeUsed ? "Skill cannot be used" : "Unknown"), new Vector2(800, 0 + offset), Color.White);
+                                offset = offset + 20;
+                            }
+                            continue;
+                        }
+                    }
                     #region Ranged Trigger -> Mirage Archer / Frenzy
 
                     if (Settings.rangedTriggerEnabled)
@@ -441,7 +503,7 @@ namespace CoPilot
 
                     #endregion
 
-                     #region Enduring Cry
+                    #region Enduring Cry
 
                     if (Settings.enduringCryEnabled)
                         try
@@ -449,9 +511,9 @@ namespace CoPilot
                             if (skill.Id == SkillInfo.enduringCry.Id)
                                 if (SkillInfo.ManageCooldown(SkillInfo.enduringCry, skill))
                                     if (MonsterCheck(Settings.enduringCryTriggerRange, Settings.enduringCryMinAny,
-                                            Settings.enduringCryMinRare, Settings.enduringCryMinUnique) && 
-                                        (player.HPPercentage < (float) Settings.enduringCryHealHpp / 100 ||
-                                        player.ESPercentage < (float) Settings.enduringCryHealEsp / 100)
+                                            Settings.enduringCryMinRare, Settings.enduringCryMinUnique) ||
+                                        player.HPPercentage < (float) Settings.enduringCryHealHpp / 100 ||
+                                        player.ESPercentage < (float) Settings.enduringCryHealEsp / 100
                                         || Settings.enduringCrySpam)
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                         }
@@ -487,16 +549,15 @@ namespace CoPilot
                         {
                             if (skill.Id == SkillInfo.witherStep.Id)
                                 if (SkillInfo.ManageCooldown(SkillInfo.witherStep, skill))
-                                    if (!isAttacking && isMoving)
-                                    {
-                                        Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
-                                        SkillInfo.phaserun.Cooldown = 250;
-                                    }
+                                        if (!isAttacking && !isCasting && isMoving || ((isAttacking || isCasting) && Settings.phaserunUseWhileAttacking)) {
+                                            Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
+                                            SkillInfo.phaserun.Cooldown = 250;
+                                        }
 
                             if (skill.Id == SkillInfo.phaserun.Id)
                                 if (SkillInfo.ManageCooldown(SkillInfo.phaserun, skill))
                                 {
-                                    if (!Settings.phaserunUseLifeTap && !isAttacking && isMoving &&
+                                    if (!Settings.phaserunUseLifeTap && (!isAttacking && !isCasting && isMoving || ((isAttacking || isCasting) && Settings.phaserunUseWhileAttacking)) &&
                                         !buffs.Exists(b => b.Name == SkillInfo.witherStep.BuffName) &&
                                         !buffs.Exists(b =>
                                             b.Name == SkillInfo.phaserun.BuffName && b.Timer > 0.1))
@@ -574,15 +635,79 @@ namespace CoPilot
                         try
                         {
                             if (skill.Id == SkillInfo.bloodRage.Id)
-                                if (SkillInfo.ManageCooldown(SkillInfo.bloodRage, skill))
-                                    if (!buffs.Exists(b =>
-                                            b.Name == SkillInfo.bloodRage.BuffName && b.Timer > 1.0) &&
-                                        MonsterCheck(Settings.bloodRageRange, Settings.bloodRageMinAny,
-                                            Settings.bloodRageMinRare, Settings.bloodRageMinUnique))
+                            {
+                                if ((!Settings.bloodRageReqFullHealth || this.player.HPPercentage > 0.999f)
+                                 && SkillInfo.ManageCooldown(SkillInfo.bloodRage, skill))
+                                {
+                                    if (!buffs.Exists(b => b.Name == SkillInfo.bloodRage.BuffName && b.Timer > 1.0)
+                                     && MonsterCheck(
+                                            Settings.bloodRageRange,
+                                            Settings.bloodRageMinAny,
+                                            Settings.bloodRageMinRare,
+                                            Settings.bloodRageMinUnique))
                                     {
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                         SkillInfo.bloodRage.Cooldown = 100;
                                     }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogError(e.ToString());
+                        }
+
+                    #endregion
+
+                    #region Focus
+
+                    if (Settings.FocusEnabled)
+                        try
+                        {
+                            if (skill.Id == SkillInfo.focus.Id)
+                            {
+                                if (!buffs.Exists(b => b.Name == SkillInfo.focus.BuffName)
+                                 && SkillInfo.ManageCooldown(SkillInfo.focus, skill)
+                                 && MonsterCheck(
+                                        Settings.FocusRange,
+                                        Settings.FocusMinAny,
+                                        Settings.FocusMinRare,
+                                        Settings.FocusMinUnique))
+                                {
+                                    Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
+                                    SkillInfo.focus.Cooldown = Settings.FocusCooldown;
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogError(e.ToString());
+                        }
+
+                    #endregion
+
+                    #region Corrupting Fever
+
+                    if (Settings.CorruptingFeverEnabled)
+                        try
+                        {
+                            if (skill.Id == SkillInfo.corruptingFever.Id)
+                            {
+
+                                if (!Settings.CorruptingFeverReqFullHealth || this.player.HPPercentage > 0.9f) {
+                                    if (!buffs.Exists(b => b.Name == SkillInfo.corruptingFever.BuffName)
+                                     && SkillInfo.ManageCooldown(SkillInfo.corruptingFever, skill)
+                                     && MonsterCheck(
+                                            Settings.CorruptingFeverRange,
+                                            Settings.CorruptingFeverMinAny,
+                                            Settings.CorruptingFeverMinRare,
+                                            Settings.CorruptingFeverMinUnique))
+                                    {
+                                        Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
+                                        SkillInfo.corruptingFever.Cooldown = 100;
+                                    }
+                                }
+                            }
                         }
                         catch (Exception e)
                         {
@@ -788,15 +913,31 @@ namespace CoPilot
                     if (Settings.anyVaalEnabled)
                         try
                         {
+                            if (Settings.debugMode)
+                            {
+                                foreach (ActorVaalSkill actorVaalSkill in vaalSkills)
+                                {
+                                    if (actorVaalSkill.VaalSkillSkillName != "" && skill.Name != "")
+                                    {
+                                        Graphics.DrawText("actorVaalSkill: " + actorVaalSkill.VaalSkillSkillName + ", " + actorVaalSkill.VaalSkillDisplayName + ", " + actorVaalSkill.VaalSkillInternalName, new Vector2(800, 0 + offset), Color.White);
+                                        Graphics.DrawText("currentSkill in loop: " + skill.Name + ", " + skill.InternalName, new Vector2(800, 0 + offset + 20), Color.White);
+                                        offset = offset + 40;
+                                    }
+                                }
+                            }
                             if (SkillInfo.ManageCooldown(SkillInfo.vaalSkill, skill))
                                 if (MonsterCheck(Settings.anyVaalTriggerRange, Settings.anyVaalMinAny,
                                     Settings.anyVaalMinRare, Settings.anyVaalMinUnique) && vaalSkills.Exists(x =>
-                                    x.VaalSkillInternalName == skill.InternalName &&
+                                    (x.VaalSkillSkillName == skill.Name || x.VaalSkillInternalName == skill.Name || x.VaalSkillDisplayName == skill.Name ||
+                                    x.VaalSkillDisplayName.Replace(" ", "") == skill.Name ||
+                                    x.VaalSkillDisplayName.Replace("Vaal", "").Replace(" ", "") == skill.Name) &&
                                     x.CurrVaalSouls >= x.VaalSoulsPerUse))
-                                     if (player.HPPercentage<= (float)Settings.anyVaalHpp / 100 ||
-                                        player.MaxES > 0 && player.ESPercentage < (float)Settings.anyVaalEsp / 100 || 
-                                        player.MPPercentage < (float)Settings.anyVaalMpp / 100)
+                                {
+                                    if (player.HPPercentage <= (float)Settings.anyVaalHpp ||
+                                        player.MaxES > 0 && player.ESPercentage <
+                                        (float)Settings.anyVaalEsp || player.MPPercentage < (float)Settings.anyVaalMpp / 100)
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
+                                }
                         }
                         catch (Exception e)
                         {
@@ -1033,7 +1174,7 @@ namespace CoPilot
                         {
                             if (skill.Id == SkillInfo.plagueBearer.Id)
                             {
-                                if (SkillInfo.ManageCooldown(SkillInfo.plagueBearer, skill) && GetMonsterWithin(Settings.plagueBearerRange) > Settings.plagueBearerMinEnemys && buffs.Exists(x => x.Name == "corrosive_shroud_at_max_damage"))
+                                if (buffs.Exists(x => x.Name == "corrosive_shroud_at_max_damage") && GetMonsterWithin(Settings.plagueBearerRange) > Settings.plagueBearerMinEnemys)
                                 {
                                     Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                 }
@@ -1106,75 +1247,6 @@ namespace CoPilot
                             {
                                 Keyboard.KeyPress(Settings.customKey);
                                 lastCustom = DateTime.Now;
-                            }
-                    }
-                    catch (Exception e)
-                    {
-                        LogError(e.ToString());
-                    }
-                #endregion
-
-                #region Custom1 Skill
-
-                if (Settings.custom1Enabled)
-                    try
-                    {
-                        if (Gcd() &&
-                            (DateTime.Now - lastCustom1).TotalMilliseconds > Settings.custom1Cooldown.Value &&
-                            MonsterCheck(Settings.custom1TriggerRange, Settings.custom1MinAny, Settings.custom1MinRare,
-                                Settings.custom1MinUnique))
-                            if (player.HPPercentage <= (float)Settings.custom1Hpp / 100 ||
-                                player.MaxES > 0 && player.ESPercentage <
-                                (float)Settings.custom1Esp / 100)
-                            {
-                                Keyboard.KeyPress(Settings.custom1Key);
-                                lastCustom1 = DateTime.Now;
-                            }
-                    }
-                    catch (Exception e)
-                    {
-                        LogError(e.ToString());
-                    }
-                #endregion
-                
-                #region Custom2 Skill
-
-                if (Settings.custom2Enabled)
-                    try
-                    {
-                        if (Gcd() &&
-                            (DateTime.Now - lastCustom2).TotalMilliseconds > Settings.custom2Cooldown.Value &&
-                            MonsterCheck(Settings.custom2TriggerRange, Settings.custom2MinAny, Settings.custom2MinRare,
-                                Settings.custom2MinUnique))
-                            if (player.HPPercentage <= (float)Settings.custom2Hpp / 100 ||
-                                player.MaxES > 0 && player.ESPercentage <
-                                (float)Settings.custom2Esp / 100)
-                            {
-                                Keyboard.KeyPress(Settings.custom2Key);
-                                lastCustom2 = DateTime.Now;
-                            }
-                    }
-                    catch (Exception e)
-                    {
-                        LogError(e.ToString());
-                    }
-                #endregion
-                
-                #region Custom3 Skill
-
-                if (Settings.custom3Enabled)
-                    try
-                    {
-                        if (Gcd() &&
-                            (DateTime.Now - lastCustom3).TotalMilliseconds > Settings.custom3Cooldown.Value &&
-                            MonsterCheck(Settings.custom3TriggerRange, Settings.custom3MinAny, Settings.custom3MinRare,
-                                Settings.custom3MinUnique))
-                            if (player.HPPercentage <= (float)Settings.custom3Hpp / 100 ||
-                                player.MaxES > 0 && player.ESPercentage <
-                                (float)Settings.custom3Esp / 100)
-                            {
-                                Keyboard.KeyPress(Settings.custom3Key);
-                                lastCustom3 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
