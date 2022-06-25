@@ -217,7 +217,7 @@ namespace CoPilot
                     case "summon_ice_elemental":
                         iceGolem.Id = skill.Id;
                         break;
-                    case "summon_lightning_golem":
+                    case "SummonLightningGolem":
                         lightningGolem.Id = skill.Id;
                         break;
                     case "summon_rock_golem":
