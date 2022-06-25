@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
@@ -85,7 +85,6 @@ namespace CoPilot
 
         public ToggleNode phaserunEnabled = new ToggleNode(false);
         public ToggleNode phaserunUseLifeTap = new ToggleNode(false);
-        public ToggleNode phaserunUseWhileAttacking = new ToggleNode(false);
 
         #endregion
 
@@ -171,17 +170,6 @@ namespace CoPilot
         public RangeNode<int> FocusMinAny = new RangeNode<int>(1, 0, 50);
         public RangeNode<int> FocusMinRare = new RangeNode<int>(0, 0, 50);
         public RangeNode<int> FocusMinUnique = new RangeNode<int>(0, 0, 50);
-
-        #endregion
-
-        #region CorruptingFever
-
-        public ToggleNode CorruptingFeverEnabled = new ToggleNode(false);
-        public ToggleNode CorruptingFeverReqFullHealth = new ToggleNode(false);
-        public RangeNode<int> CorruptingFeverRange = new RangeNode<int>(800, 300, 3000);
-        public RangeNode<int> CorruptingFeverMinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> CorruptingFeverMinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> CorruptingFeverMinUnique = new RangeNode<int>(0, 0, 50);
 
         #endregion
 
@@ -290,8 +278,6 @@ namespace CoPilot
         public RangeNode<int> VaalClarityManaPct = new RangeNode<int>(0, 0, 100);
         
         #endregion
-        
-        
 
         #region Custom Skill
 
@@ -303,13 +289,15 @@ namespace CoPilot
         public RangeNode<int> customHpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> customEsp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> customCooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode customKey = new HotkeyNode(Keys.1);
+        public HotkeyNode customKey = new HotkeyNode(Keys.T);
 
         #endregion
         
         
-
-        #region Custom1 Skill
+        
+        
+        
+         #region Custom1 Skill
 
         public ToggleNode custom1Enabled = new ToggleNode(false);
         public RangeNode<int> custom1TriggerRange = new RangeNode<int>(500, 100, 2000);
@@ -319,10 +307,12 @@ namespace CoPilot
         public RangeNode<int> custom1Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom1Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom1Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom1Key = new HotkeyNode(Keys.2);
+        public HotkeyNode custom1Key = new HotkeyNode(Keys.NumPad2);
 
         #endregion
         
+		
+		
         #region Custom2 Skill
 
         public ToggleNode custom2Enabled = new ToggleNode(false);
@@ -333,10 +323,12 @@ namespace CoPilot
         public RangeNode<int> custom2Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom2Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom2Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom2Key = new HotkeyNode(Keys.3);
+        public HotkeyNode custom2Key = new HotkeyNode(Keys.NumPad3);
 
         #endregion
         
+		
+		
         #region Custom3 Skill
 
         public ToggleNode custom3Enabled = new ToggleNode(false);
@@ -347,11 +339,12 @@ namespace CoPilot
         public RangeNode<int> custom3Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom3Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom3Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom3Key = new HotkeyNode(Keys.4);
+        public HotkeyNode custom3Key = new HotkeyNode(Keys.NumPad4);
 
         #endregion
         
-        
+    
+	    
         #region Custom4 Skill
 
         public ToggleNode custom4Enabled = new ToggleNode(false);
@@ -362,11 +355,12 @@ namespace CoPilot
         public RangeNode<int> custom4Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom4Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom4Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom4Key = new HotkeyNode(Keys.5);
+        public HotkeyNode custom4Key = new HotkeyNode(Keys.NumPad5);
 
         #endregion
         
-        
+     
+	    
         #region Custom5 Skill
 
         public ToggleNode custom5Enabled = new ToggleNode(false);
@@ -380,7 +374,9 @@ namespace CoPilot
         public HotkeyNode custom5Key = new HotkeyNode(Keys.T);
 
         #endregion
-        
+      
+	  
+	    
         
         #region Custom6 Skill
 
@@ -395,7 +391,9 @@ namespace CoPilot
         public HotkeyNode custom6Key = new HotkeyNode(Keys.Z);
 
         #endregion
-        
+    
+	
+	    
         
         #region Custom7 Skill
 
@@ -411,7 +409,9 @@ namespace CoPilot
         
         #endregion
         
-        
+    
+	
+	    
         #region Custom8 Skill
 
         public ToggleNode custom8Enabled = new ToggleNode(false);
@@ -425,6 +425,7 @@ namespace CoPilot
         public HotkeyNode custom8Key = new HotkeyNode(Keys.E);
 
         #endregion
+        
         
         
         
