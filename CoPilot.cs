@@ -332,6 +332,9 @@ namespace CoPilot
                     Quit();
                 }
 
+
+
+
                 localPlayer = GameController.Game.IngameState.Data.LocalPlayer;
                 player = localPlayer.GetComponent<Life>();
                 buffs = localPlayer.GetComponent<Buffs>().BuffsList;
@@ -374,7 +377,10 @@ namespace CoPilot
                             GameController.IsLoading ? "Game is loading" : "Unknown"), new Vector2(10, 260 + offset), Color.White);
                     return;
                 }
-                
+ 
+
+
+ 
                 enemys = GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster].Where(x =>
                     x != null && x.IsAlive && x.IsHostile && x.HasComponent<Targetable>() &&
                     x.GetComponent<Targetable>().isTargetable && x.HasComponent<Life>() &&
@@ -394,7 +400,10 @@ namespace CoPilot
                         x.HasComponent<Monster>()).ToList();
                 
                 if (Settings.autoGolemEnabled) summons.UpdateSummons();
-                
+ 
+
+
+ 
                 
                 #region Auto Quit
 
