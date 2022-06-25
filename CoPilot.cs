@@ -265,7 +265,7 @@ namespace CoPilot
             var coroutine = new Coroutine(WaitForSkillsAfterAreaChange(), this);
             Core.ParallelRunner.Run(coroutine);
             
-            //autoPilot.AreaChange();
+            autoPilot.AreaChange();
         }
         
         public override void DrawSettings()
@@ -333,9 +333,8 @@ namespace CoPilot
                     !GameController.InGame || GameController.IsLoading) return;
                 
                 enemys = GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster].Where(x =>
-                    x != null && x.IsAlive && x.IsHostile && x.HasComponent<Targetable>() &&
-                    x.GetComponent<Targetable>().isTargetable && x.HasComponent<Life>() &&
-                    x.GetComponent<Life>().CurHP > 0 && !HasStat(x, GameStat.CannotBeDamaged) &&
+                    x != null && x.IsAlive && x.IsHostile && x.GetComponent<Life>()?.CurHP > 0 && 
+                    x.GetComponent<Targetable>()?.isTargetable == true && !HasStat(x, GameStat.CannotBeDamaged) &&
                     GameController.Window.GetWindowRectangleTimeCache.Contains(
                         GameController.Game.IngameState.Camera.WorldToScreen(x.Pos))).ToList();
                 if (Settings.debugMode)
@@ -447,7 +446,7 @@ namespace CoPilot
 
                     #endregion
 
-                    #region Enduring Cry
+                     #region Enduring Cry
 
                     if (Settings.enduringCryEnabled)
                         try
@@ -455,9 +454,9 @@ namespace CoPilot
                             if (skill.Id == SkillInfo.enduringCry.Id)
                                 if (SkillInfo.ManageCooldown(SkillInfo.enduringCry, skill))
                                     if (MonsterCheck(Settings.enduringCryTriggerRange, Settings.enduringCryMinAny,
-                                            Settings.enduringCryMinRare, Settings.enduringCryMinUnique) ||
-                                        player.HPPercentage < (float) Settings.enduringCryHealHpp / 100 ||
-                                        player.ESPercentage < (float) Settings.enduringCryHealEsp / 100
+                                            Settings.enduringCryMinRare, Settings.enduringCryMinUnique) && 
+                                        (player.HPPercentage < (float) Settings.enduringCryHealHpp / 100 ||
+                                        player.ESPercentage < (float) Settings.enduringCryHealEsp / 100)
                                         || Settings.enduringCrySpam)
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                         }
@@ -580,16 +579,11 @@ namespace CoPilot
                         try
                         {
                             if (skill.Id == SkillInfo.bloodRage.Id)
-                            {
-                                if ((!Settings.bloodRageReqFullHealth || this.player.HPPercentage > 0.999f)
-                                 && SkillInfo.ManageCooldown(SkillInfo.bloodRage, skill))
-                                {
-                                    if (!buffs.Exists(b => b.Name == SkillInfo.bloodRage.BuffName && b.Timer > 1.0)
-                                     && MonsterCheck(
-                                            Settings.bloodRageRange,
-                                            Settings.bloodRageMinAny,
-                                            Settings.bloodRageMinRare,
-                                            Settings.bloodRageMinUnique))
+                                if (SkillInfo.ManageCooldown(SkillInfo.bloodRage, skill))
+                                    if (!buffs.Exists(b =>
+                                            b.Name == SkillInfo.bloodRage.BuffName && b.Timer > 1.0) &&
+                                        MonsterCheck(Settings.bloodRageRange, Settings.bloodRageMinAny,
+                                            Settings.bloodRageMinRare, Settings.bloodRageMinUnique))
                                     {
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                         SkillInfo.bloodRage.Cooldown = 100;
@@ -833,9 +827,9 @@ namespace CoPilot
                                     Settings.anyVaalMinRare, Settings.anyVaalMinUnique) && vaalSkills.Exists(x =>
                                     x.VaalSkillInternalName == skill.InternalName &&
                                     x.CurrVaalSouls >= x.VaalSoulsPerUse))
-                                    if (player.HPPercentage<= (float)Settings.anyVaalHpp ||
-                                        player.MaxES > 0 && player.ESPercentage<
-                                        (float)Settings.anyVaalEsp || player.MPPercentage < (float)Settings.anyVaalMpp / 100)
+                                     if (player.HPPercentage<= (float)Settings.anyVaalHpp / 100 ||
+                                        player.MaxES > 0 && player.ESPercentage < (float)Settings.anyVaalEsp / 100 || 
+                                        player.MPPercentage < (float)Settings.anyVaalMpp / 100)
                                         Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                         }
                         catch (Exception e)
@@ -1073,7 +1067,7 @@ namespace CoPilot
                         {
                             if (skill.Id == SkillInfo.plagueBearer.Id)
                             {
-                                if (buffs.Exists(x => x.Name == "corrosive_shroud_at_max_damage") && GetMonsterWithin(Settings.plagueBearerRange) > Settings.plagueBearerMinEnemys)
+                                if (SkillInfo.ManageCooldown(SkillInfo.plagueBearer, skill) && GetMonsterWithin(Settings.plagueBearerRange) > Settings.plagueBearerMinEnemys && buffs.Exists(x => x.Name == "corrosive_shroud_at_max_damage"))
                                 {
                                     Keyboard.KeyPress(GetSkillInputKey(skill.SkillSlotIndex));
                                 }
@@ -1153,18 +1147,14 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            
-        
-        
-        
-        
+
                 #region Custom1 Skill
 
                 if (Settings.custom1Enabled)
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom1).TotalMilliseconds > Settings.custom1Cooldown.Value &&
+                            (DateTime.Now - lastCustom1).TotalMilliseconds > Settings.custom1Cooldown.Value &&
                             MonsterCheck(Settings.custom1TriggerRange, Settings.custom1MinAny, Settings.custom1MinRare,
                                 Settings.custom1MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom1Hpp / 100 ||
@@ -1172,7 +1162,7 @@ namespace CoPilot
                                 (float)Settings.custom1Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom1Key);
-                                lastcustom1 = DateTime.Now;
+                                lastCustom1 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1180,18 +1170,14 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            
-
-
-
-
+                
                 #region Custom2 Skill
 
                 if (Settings.custom2Enabled)
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom2).TotalMilliseconds > Settings.custom2Cooldown.Value &&
+                            (DateTime.Now - lastCustom2).TotalMilliseconds > Settings.custom2Cooldown.Value &&
                             MonsterCheck(Settings.custom2TriggerRange, Settings.custom2MinAny, Settings.custom2MinRare,
                                 Settings.custom2MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom2Hpp / 100 ||
@@ -1199,7 +1185,7 @@ namespace CoPilot
                                 (float)Settings.custom2Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom2Key);
-                                lastcustom2 = DateTime.Now;
+                                lastCustom2 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1207,19 +1193,14 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            
-
-
-
-
-
+                
                 #region Custom3 Skill
 
                 if (Settings.custom3Enabled)
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom3).TotalMilliseconds > Settings.custom3Cooldown.Value &&
+                            (DateTime.Now - lastCustom3).TotalMilliseconds > Settings.custom3Cooldown.Value &&
                             MonsterCheck(Settings.custom3TriggerRange, Settings.custom3MinAny, Settings.custom3MinRare,
                                 Settings.custom3MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom3Hpp / 100 ||
@@ -1227,7 +1208,7 @@ namespace CoPilot
                                 (float)Settings.custom3Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom3Key);
-                                lastcustom3 = DateTime.Now;
+                                lastCustom3 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1245,7 +1226,7 @@ namespace CoPilot
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom4).TotalMilliseconds > Settings.custom4Cooldown.Value &&
+                            (DateTime.Now - lastCustom4).TotalMilliseconds > Settings.custom4Cooldown.Value &&
                             MonsterCheck(Settings.custom4TriggerRange, Settings.custom4MinAny, Settings.custom4MinRare,
                                 Settings.custom4MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom4Hpp / 100 ||
@@ -1253,7 +1234,7 @@ namespace CoPilot
                                 (float)Settings.custom4Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom4Key);
-                                lastcustom4 = DateTime.Now;
+                                lastCustom4 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1271,7 +1252,7 @@ namespace CoPilot
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom5).TotalMilliseconds > Settings.custom5Cooldown.Value &&
+                            (DateTime.Now - lastCustom5).TotalMilliseconds > Settings.custom5Cooldown.Value &&
                             MonsterCheck(Settings.custom5TriggerRange, Settings.custom5MinAny, Settings.custom5MinRare,
                                 Settings.custom5MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom5Hpp / 100 ||
@@ -1279,7 +1260,7 @@ namespace CoPilot
                                 (float)Settings.custom5Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom5Key);
-                                lastcustom5 = DateTime.Now;
+                                lastCustom5 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1297,7 +1278,7 @@ namespace CoPilot
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom6).TotalMilliseconds > Settings.custom6Cooldown.Value &&
+                            (DateTime.Now - lastCustom6).TotalMilliseconds > Settings.custom6Cooldown.Value &&
                             MonsterCheck(Settings.custom6TriggerRange, Settings.custom6MinAny, Settings.custom6MinRare,
                                 Settings.custom6MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom6Hpp / 100 ||
@@ -1305,7 +1286,7 @@ namespace CoPilot
                                 (float)Settings.custom6Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom6Key);
-                                lastcustom6 = DateTime.Now;
+                                lastCustom6 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1325,7 +1306,7 @@ namespace CoPilot
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom7).TotalMilliseconds > Settings.custom7Cooldown.Value &&
+                            (DateTime.Now - lastCustom7).TotalMilliseconds > Settings.custom7Cooldown.Value &&
                             MonsterCheck(Settings.custom7TriggerRange, Settings.custom7MinAny, Settings.custom7MinRare,
                                 Settings.custom7MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom7Hpp / 100 ||
@@ -1333,7 +1314,7 @@ namespace CoPilot
                                 (float)Settings.custom7Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom7Key);
-                                lastcustom7 = DateTime.Now;
+                                lastCustom7 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
@@ -1352,7 +1333,7 @@ namespace CoPilot
                     try
                     {
                         if (Gcd() &&
-                            (DateTime.Now - lastcustom8).TotalMilliseconds > Settings.custom8Cooldown.Value &&
+                            (DateTime.Now - lastCustom8).TotalMilliseconds > Settings.custom8Cooldown.Value &&
                             MonsterCheck(Settings.custom8TriggerRange, Settings.custom8MinAny, Settings.custom8MinRare,
                                 Settings.custom8MinUnique))
                             if (player.HPPercentage <= (float)Settings.custom8Hpp / 100 ||
@@ -1360,7 +1341,7 @@ namespace CoPilot
                                 (float)Settings.custom8Esp / 100)
                             {
                                 Keyboard.KeyPress(Settings.custom8Key);
-                                lastcustom8 = DateTime.Now;
+                                lastCustom8 = DateTime.Now;
                             }
                     }
                     catch (Exception e)
