@@ -1262,15 +1262,12 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
         
         
         
         
-        #region Custom1 Skill
+                #region Custom1 Skill
 
                 if (Settings.custom1Enabled)
                     try
@@ -1292,15 +1289,12 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
 
- #region Custom2 Skill
+                #region Custom2 Skill
 
                 if (Settings.custom2Enabled)
                     try
@@ -1322,16 +1316,13 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
 
 
-#region Custom3 Skill
+                #region Custom3 Skill
 
                 if (Settings.custom3Enabled)
                     try
@@ -1353,14 +1344,11 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
-  #region Custom4 Skill
+                #region Custom4 Skill
 
                 if (Settings.custom4Enabled)
                     try
@@ -1382,14 +1370,11 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
-  #region Custom5 Skill
+                #region Custom5 Skill
 
                 if (Settings.custom5Enabled)
                     try
@@ -1411,15 +1396,11 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
-
-  #region Custom6 Skill
+                #region Custom6 Skill
 
                 if (Settings.custom6Enabled)
                     try
@@ -1441,16 +1422,13 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
 
 
-#region Custom7 Skill
+                #region Custom7 Skill
 
                 if (Settings.custom7Enabled)
                     try
@@ -1472,15 +1450,12 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
 
- #region Custom8 Skill
+                #region Custom8 Skill
 
                 if (Settings.custom8Enabled)
                     try
@@ -1502,10 +1477,7 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            }
-            catch (Exception e)
-            {LogError(e.ToString());}
-        }
+            
 
 
 
