@@ -42,6 +42,7 @@ namespace CoPilot
         private DateTime lastCustom1;
         private DateTime lastCustom2;
         private DateTime lastCustom3;
+        private DateTime lastCustom4;
         private DateTime lastDelveFlare;
         private DateTime lastStackSkill;
         internal DateTime lastTimeAny;
@@ -1175,6 +1176,29 @@ namespace CoPilot
                             {
                                 Keyboard.KeyPress(Settings.custom3Key);
                                 lastCustom3 = DateTime.Now;
+                            }
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                #endregion
+                
+                #region Custom4 Skill
+
+                if (Settings.custom4Enabled)
+                    try
+                    {
+                        if (Gcd() &&
+                            (DateTime.Now - lastCustom4).TotalMilliseconds > Settings.custom4Cooldown.Value &&
+                            MonsterCheck(Settings.custom4TriggerRange, Settings.custom4MinAny, Settings.custom4MinRare,
+                                Settings.custom4MinUnique))
+                            if (player.HPPercentage <= (float)Settings.custom4Hpp / 100 ||
+                                player.MaxES > 0 && player.ESPercentage <
+                                (float)Settings.custom4Esp / 100)
+                            {
+                                Keyboard.KeyPress(Settings.custom4Key);
+                                lastCustom4 = DateTime.Now;
                             }
                     }
                     catch (Exception e)

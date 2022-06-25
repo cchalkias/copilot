@@ -653,7 +653,7 @@ namespace CoPilot
             try
             {
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom2Enabled ? green : red);
-                ImGui.PushID(38);
+                ImGui.PushID(28);
                 if (ImGui.TreeNodeEx("Custom2 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
                 {
                     CoPilot.instance.Settings.custom2Enabled.Value =
@@ -685,7 +685,7 @@ namespace CoPilot
             try
             {
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom3Enabled ? green : red);
-                ImGui.PushID(39);
+                ImGui.PushID(29);
                 if (ImGui.TreeNodeEx("Custom3 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
                 {
                     CoPilot.instance.Settings.custom3Enabled.Value =
@@ -712,6 +712,41 @@ namespace CoPilot
             {
                 CoPilot.instance.LogError(e.ToString());
             }
+            
+            
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom4Enabled ? green : red);
+                ImGui.PushID(30);
+                if (ImGui.TreeNodeEx("Custom4 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom4Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom4Enabled.Value);
+                    CoPilot.instance.Settings.custom4Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom4Key.Value, CoPilot.instance.Settings.custom4Key);
+                    CoPilot.instance.Settings.custom4Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom4Cooldown);
+                    CoPilot.instance.Settings.custom4TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom4TriggerRange);
+                    CoPilot.instance.Settings.custom4Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom4Hpp);
+                    CoPilot.instance.Settings.custom3Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom4Esp);
+                    CoPilot.instance.Settings.custom4MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom4MinAny);
+                    CoPilot.instance.Settings.custom4MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom4MinRare);
+                    CoPilot.instance.Settings.custom4MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom4MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+            
+            
+            
 
             try
             {
