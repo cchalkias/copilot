@@ -277,7 +277,7 @@ namespace CoPilot
         public RangeNode<int> customHpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> customEsp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> customCooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode customKey = new HotkeyNode(Keys.T);
+        public HotkeyNode customKey = new HotkeyNode(Keys.1);
 
         #endregion
 
@@ -291,7 +291,7 @@ namespace CoPilot
         public RangeNode<int> custom1Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom1Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom1Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom1Key = new HotkeyNode(Keys.T);
+        public HotkeyNode custom1Key = new HotkeyNode(Keys.2);
 
         #endregion
         
@@ -305,7 +305,7 @@ namespace CoPilot
         public RangeNode<int> custom2Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom2Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom2Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom2Key = new HotkeyNode(Keys.T);
+        public HotkeyNode custom2Key = new HotkeyNode(Keys.3);
 
         #endregion
         
@@ -319,7 +319,7 @@ namespace CoPilot
         public RangeNode<int> custom3Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom3Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom3Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom3Key = new HotkeyNode(Keys.T);
+        public HotkeyNode custom3Key = new HotkeyNode(Keys.4);
 
         #endregion
         
@@ -333,7 +333,7 @@ namespace CoPilot
         public RangeNode<int> custom4Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom4Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom4Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom4Key = new HotkeyNode(Keys.T);
+        public HotkeyNode custom4Key = new HotkeyNode(Keys.5);
 
         #endregion
         
