@@ -653,7 +653,7 @@ namespace CoPilot
             try
             {
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom2Enabled ? green : red);
-                ImGui.PushID(27);
+                ImGui.PushID(38);
                 if (ImGui.TreeNodeEx("Custom2 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
                 {
                     CoPilot.instance.Settings.custom2Enabled.Value =
@@ -685,7 +685,7 @@ namespace CoPilot
             try
             {
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom3Enabled ? green : red);
-                ImGui.PushID(27);
+                ImGui.PushID(39);
                 if (ImGui.TreeNodeEx("Custom3 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
                 {
                     CoPilot.instance.Settings.custom3Enabled.Value =
