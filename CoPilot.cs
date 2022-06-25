@@ -1477,7 +1477,10 @@ namespace CoPilot
                         LogError(e.ToString());
                     }
                 #endregion
-            
+            }
+            catch (Exception e)
+            {LogError(e.ToString());}
+        }
 
 
 
