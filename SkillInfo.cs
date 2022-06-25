@@ -58,8 +58,6 @@ namespace CoPilot
         internal static Skill sweep = new Skill();
         internal static Skill witherStep = new Skill();
         internal static Skill frenzy = new Skill();
-        internal static Skill focus = new Skill();
-        internal static Skill corruptingFever = new Skill();
 
         internal static void ResetSkills()
         {
@@ -104,8 +102,6 @@ namespace CoPilot
             sweep = new Skill();
             witherStep = new Skill();
             frenzy = new Skill();
-            focus = new Skill();
-            corruptingFever = new Skill();
         }
 
         public static void GetDeltaTime()
@@ -130,7 +126,14 @@ namespace CoPilot
 
             if (!actorSkill.Stats.TryGetValue(GameStat.ManaCost, out var manaCost))
                 manaCost = 0;
-            return CoPilot.instance.player.CurMana >= manaCost;
+
+            if (CoPilot.instance.player.CurMana >= manaCost)
+                return true;
+            if (!CoPilot.instance.localPlayer.Stats.TryGetValue(GameStat.VirtualEnergyShieldProtectsMana,
+                out var hasEldritchBattery))
+                hasEldritchBattery = 0;
+
+            return hasEldritchBattery > 0 && CoPilot.instance.player.CurES > manaCost;
         }
 
         internal static bool ManageCooldown(Skill skill)
@@ -157,176 +160,149 @@ namespace CoPilot
             {
                 if (!skill.IsOnSkillBar)
                     continue;
-                switch (skill.Name)
+                switch (skill.InternalName)
                 {
-                    case "EnduringCry":
+                    case "enduring_cry":
                         enduringCry.Id = skill.Id;
                         break;
-                    case "SpiritualCry":
+                    case "spiritual_cry":
                         generalCry.Id = skill.Id;
                         break;
-                    case "InspiringCry":
+                    case "inspiring_cry":
                         rallyingCry.Id = skill.Id;
                         rallyingCry.BuffName = "inspiring_cry";
                         break;
-                    case "BoneOffering":
+                    case "bone_offering":
                         boneOffering.Id = skill.Id;
                         boneOffering.BuffName = "active_offering";
                         break;
-                    case "SpiritOffering":
+                    case "spirit_offering":
                         spiritOffering.Id = skill.Id;
                         spiritOffering.BuffName = "active_offering";
                         break;
-                    case "FleshOffering":
+                    case "flesh_offering":
                         fleshOffering.Id = skill.Id;
                         fleshOffering.BuffName = "active_offering";
                         break;
-                    case "PhaseRun":
-                    case "NewPhaseRun":
+                    case "new_phase_run":
                         phaserun.Id = skill.Id;
                         phaserun.BuffName = "new_phase_run";
                         break;
-                    case "MoltenShell":
-                    case "MoltenShellBarrier":
+                    case "molten_shell_barrier":
                         moltenShell.Id = skill.Id;
                         moltenShell.BuffName = "fire_shield";
                         break;
-                    case "Steelskin":
+                    case "steelskin":
                         steelSkin.Id = skill.Id;
                         steelSkin.BuffName = "quick_guard";
                         break;
-                    case "BoneArmour":
+                    case "bone_armour":
                         boneArmour.Id = skill.Id;
                         boneArmour.BuffName = "bone_armour";
                         break;
-                    case "ArcaneCloak":
+                    case "arcane_cloak":
                         arcaneCloak.Id = skill.Id;
                         arcaneCloak.BuffName = "arcane_cloak";
                         break;
-                    case "BloodRage":
+                    case "blood_rage":
                         bloodRage.Id = skill.Id;
                         bloodRage.BuffName = "blood_rage";
                         break;
-                    case "SummonChaosElemental":
-                    case "SummonChaosGolem":
+                    case "summon_chaos_elemental":
                         chaosGolem.Id = skill.Id;
                         break;
-                    case "SummonFireElemental":
-                    case "SummonFireGolem":
-                    case "SummonFlameGolem":
+                    case "summon_fire_elemental":
                         flameGolem.Id = skill.Id;
                         break;
-                    case "SummonIceElemental":
-                    case "SummonIceGolem":
+                    case "summon_ice_elemental":
                         iceGolem.Id = skill.Id;
                         break;
-                    case "SummonLightningGolem":
+                    case "summon_lightning_golem":
                         lightningGolem.Id = skill.Id;
                         break;
-                    case "SummonRockGolem":
-                    case "SummonStoneGolem":
+                    case "summon_rock_golem":
                         stoneGolem.Id = skill.Id;
                         break;
-                    case "SummonBoneGolem":
-                    case "SummonCarrionGolem":
+                    case "summon_bone_golem":
                         carrionGolem.Id = skill.Id;
                         break;
-                    case "SummonBestialUrsa":
-                    case "SummonUrsaGolem":
-                    case "SummonUrsa":
+                    case "summon_beastial_ursa":
                         ursaGolem.Id = skill.Id;
                         break;
-                    case "FrostBoltNova":
-                    case "Vortex":
+                    case "frost_bolt_nova":
                         vortex.Id = skill.Id;
                         break;
-                    case "DivineTempest":
-                    case "DivineIre":
+                    case "divine_tempest":
                         divineIre.Id = skill.Id;
                         divineIre.BuffName = "divine_tempest_stage";
                         break;
-                    case "VirulentArrow":
-                    case "ScourgeArrow":
+                    case "virulent_arrow":
                         scourgeArror.Id = skill.Id;
                         scourgeArror.BuffName = "virulent_arrow_counter";
                         break;
-                    case "ChargedAttack":
-                    case "BladeFlurry":
+                    case "charged_attack_channel":
                         bladeFlurry.Id = skill.Id;
                         bladeFlurry.BuffName = "charged_attack";
                         break;
-                    case "CursePillar":
-                    case "DoedreEffigy":
+                    case "curse_pillar":
                         doedreEffigy.Id = skill.Id;
                         break;
-                    case "TempestShield":
+                    case "tempest_shield":
                         tempestShield.Id = skill.Id;
                         tempestShield.BuffName = "lightning_shield";
                         break;
-                    case "SigilRecall":
-                    case "BrandRecall":
+                    case "sigil_recall":
                         brandRecall.Id = skill.Id;
                         break;
-                    case "Cyclone":
+                    case "cyclone_channelled":
                         cyclone.Id = skill.Id;
                         break;
-                    case "IceNova":
+                    case "ice_nova":
                         iceNova.Id = skill.Id;
                         break;
-                    case "RaiseZombie":
+                    case "raise_zombie":
                         raiseZombie.Id = skill.Id;
                         break;
-                    case "FlickerStrike":
+                    case "flicker_strike":
                         flickerStrike.Id = skill.Id;
                         break;
-                    case "FrostBolt":
+                    case "frost_bolt":
                         frostbolt.Id = skill.Id;
                         break;
-                    case "Convocation":
+                    case "convocation":
                         convocation.Id = skill.Id;
                         break;
-                    case "Punishment":
+                    case "new_punishment":
                         punishment.Id = skill.Id;
                         punishment.BuffName = "curse_newpunishment";
                         break;
-                    case "BladeVortex":
+                    case "new_new_blade_vortex":
                         bladeVortex.Id = skill.Id;
                         bladeVortex.BuffName = "new_new_blade_vortex";
                         break;
-                    case "BladeBurst":
+                    case "blade_burst":
                         bladeBlast.Id = skill.Id;
                         break;
-                    case "SummonRelic":
-                    case "SummonHolyRelic":
-                    case "HolyRelic":
+                    case "summon_relic":
                         holyRelict.Id = skill.Id;
                         break;
-                    case "Berserk":
+                    case "berserk":
                         berserk.Id = skill.Id;
                         berserk.BuffName = "berserk";
                         break;
-                    case "Sweep":
+                    case "sweep":
                         sweep.Id = skill.Id;
                         break;
-                    case "Slither":
+                    case "slither":
                         witherStep.Id = skill.Id;
                         witherStep.BuffName = "slither";
                         break;
-                    case "Frenzy":
+                    case "frenzy":
                         frenzy.Id = skill.Id;
                         break;
-                    case "CorrosiveShroud":
-                    case "PlagueBearer":
+                    case "corrosive_shroud":
                         plagueBearer.Id = skill.Id;
                         plagueBearer.BuffName = "corrosive_shroud";
-                        break;
-                    case "Focus":
-                        focus.Id = skill.Id;
-                        focus.BuffName = "focus";
-                        break;
-                    case "CorruptingFever":
-                        corruptingFever.Id = skill.Id;
-                        corruptingFever.BuffName = "blood_surge";
                         break;
                 }
             }

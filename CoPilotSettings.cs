@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
@@ -291,12 +291,10 @@ namespace CoPilot
         public RangeNode<int> custom1Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom1Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom1Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom1Key = new HotkeyNode(Keys.NumPad2);
+        public HotkeyNode custom1Key = new HotkeyNode(Keys.T);
 
         #endregion
         
-		
-		
         #region Custom2 Skill
 
         public ToggleNode custom2Enabled = new ToggleNode(false);
@@ -307,12 +305,10 @@ namespace CoPilot
         public RangeNode<int> custom2Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom2Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom2Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom2Key = new HotkeyNode(Keys.NumPad3);
+        public HotkeyNode custom2Key = new HotkeyNode(Keys.T);
 
         #endregion
         
-		
-		
         #region Custom3 Skill
 
         public ToggleNode custom3Enabled = new ToggleNode(false);
@@ -323,95 +319,9 @@ namespace CoPilot
         public RangeNode<int> custom3Hpp = new RangeNode<int>(100, 0, 100);
         public RangeNode<int> custom3Esp = new RangeNode<int>(0, 0, 100);
         public RangeNode<int> custom3Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom3Key = new HotkeyNode(Keys.NumPad4);
+        public HotkeyNode custom3Key = new HotkeyNode(Keys.T);
 
         #endregion
-        
-    
-	    
-        #region Custom4 Skill
-
-        public ToggleNode custom4Enabled = new ToggleNode(false);
-        public RangeNode<int> custom4TriggerRange = new RangeNode<int>(500, 100, 2000);
-        public RangeNode<int> custom4MinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> custom4MinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom4MinUnique = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom4Hpp = new RangeNode<int>(100, 0, 100);
-        public RangeNode<int> custom4Esp = new RangeNode<int>(0, 0, 100);
-        public RangeNode<int> custom4Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom4Key = new HotkeyNode(Keys.NumPad5);
-
-        #endregion
-        
-     
-	    
-        #region Custom5 Skill
-
-        public ToggleNode custom5Enabled = new ToggleNode(false);
-        public RangeNode<int> custom5TriggerRange = new RangeNode<int>(500, 100, 2000);
-        public RangeNode<int> custom5MinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> custom5MinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom5MinUnique = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom5Hpp = new RangeNode<int>(100, 0, 100);
-        public RangeNode<int> custom5Esp = new RangeNode<int>(0, 0, 100);
-        public RangeNode<int> custom5Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom5Key = new HotkeyNode(Keys.T);
-
-        #endregion
-      
-	  
-	    
-        
-        #region Custom6 Skill
-
-        public ToggleNode custom6Enabled = new ToggleNode(false);
-        public RangeNode<int> custom6TriggerRange = new RangeNode<int>(500, 100, 2000);
-        public RangeNode<int> custom6MinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> custom6MinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom6MinUnique = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom6Hpp = new RangeNode<int>(100, 0, 100);
-        public RangeNode<int> custom6Esp = new RangeNode<int>(0, 0, 100);
-        public RangeNode<int> custom6Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom6Key = new HotkeyNode(Keys.Z);
-
-        #endregion
-    
-	
-	    
-        
-        #region Custom7 Skill
-
-        public ToggleNode custom7Enabled = new ToggleNode(false);
-        public RangeNode<int> custom7TriggerRange = new RangeNode<int>(500, 100, 2000);
-        public RangeNode<int> custom7MinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> custom7MinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom7MinUnique = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom7Hpp = new RangeNode<int>(100, 0, 100);
-        public RangeNode<int> custom7Esp = new RangeNode<int>(0, 0, 100);
-        public RangeNode<int> custom7Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom7Key = new HotkeyNode(Keys.R);
-        
-        #endregion
-        
-    
-	
-	    
-        #region Custom8 Skill
-
-        public ToggleNode custom8Enabled = new ToggleNode(false);
-        public RangeNode<int> custom8TriggerRange = new RangeNode<int>(500, 100, 2000);
-        public RangeNode<int> custom8MinAny = new RangeNode<int>(1, 0, 50);
-        public RangeNode<int> custom8MinRare = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom8MinUnique = new RangeNode<int>(0, 0, 50);
-        public RangeNode<int> custom8Hpp = new RangeNode<int>(100, 0, 100);
-        public RangeNode<int> custom8Esp = new RangeNode<int>(0, 0, 100);
-        public RangeNode<int> custom8Cooldown = new RangeNode<int>(4000, 1000, 10000);
-        public HotkeyNode custom8Key = new HotkeyNode(Keys.E);
-
-        #endregion
-        
-        
-        
         
         
 
