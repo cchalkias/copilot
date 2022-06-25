@@ -337,6 +337,20 @@ namespace CoPilot
 
         #endregion
         
+        #region Custom5 Skill
+
+        public ToggleNode custom5Enabled = new ToggleNode(false);
+        public RangeNode<int> custom5TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom5MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom5MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom5MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom5Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom5Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom5Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom5Key = new HotkeyNode(Keys.NumPad5);
+        
+        #endregion
+        
         #region Brand Recall
 
         public ToggleNode brandRecallEnabled = new ToggleNode(false);

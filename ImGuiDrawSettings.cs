@@ -746,6 +746,38 @@ namespace CoPilot
             }
             
             
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom5Enabled ? green : red);
+                ImGui.PushID(31);
+                if (ImGui.TreeNodeEx("Custom5 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom5Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom5Enabled.Value);
+                    CoPilot.instance.Settings.custom5Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom5Key.Value, CoPilot.instance.Settings.custom5Key);
+                    CoPilot.instance.Settings.custom5Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom5Cooldown);
+                    CoPilot.instance.Settings.custom5TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom5TriggerRange);
+                    CoPilot.instance.Settings.custom5Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom5Hpp);
+                    CoPilot.instance.Settings.custom3Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom5Esp);
+                    CoPilot.instance.Settings.custom5MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom5MinAny);
+                    CoPilot.instance.Settings.custom5MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom5MinRare);
+                    CoPilot.instance.Settings.custom5MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom5MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+            
+            
             
 
             try
