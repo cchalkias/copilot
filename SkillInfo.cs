@@ -160,7 +160,7 @@ namespace CoPilot
             {
                 if (!skill.IsOnSkillBar)
                     continue;
-                switch (skill.InternalName)
+                switch (skill.Name)
                 {
                     case "enduring_cry":
                         enduringCry.Id = skill.Id;
