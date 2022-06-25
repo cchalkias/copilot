@@ -1245,7 +1245,7 @@ namespace CoPilot
                                 player.MaxES > 0 && player.ESPercentage <
                                 (float)Settings.custom6Esp / 100)
                             {
-                                Keyboard.KeyPress(Settings.custom5Key);
+                                Keyboard.KeyPress(Settings.custom6Key);
                                 lastCustom6 = DateTime.Now;
                             }
                     }
