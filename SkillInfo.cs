@@ -131,8 +131,6 @@ namespace CoPilot
             if (!actorSkill.Stats.TryGetValue(GameStat.ManaCost, out var manaCost))
                 manaCost = 0;
             return CoPilot.instance.player.CurMana >= manaCost;
-
-            return hasEldritchBattery > 0 && CoPilot.instance.player.CurES > manaCost;
         }
 
         internal static bool ManageCooldown(Skill skill)
