@@ -45,6 +45,8 @@ namespace CoPilot
         private DateTime lastCustom4;
         private DateTime lastCustom5;
         private DateTime lastCustom6;
+        private DateTime lastCustom7;
+        private DateTime lastCustom8;
         private DateTime lastDelveFlare;
         private DateTime lastStackSkill;
         internal DateTime lastTimeAny;
@@ -1247,6 +1249,52 @@ namespace CoPilot
                             {
                                 Keyboard.KeyPress(Settings.custom6Key);
                                 lastCustom6 = DateTime.Now;
+                            }
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                #endregion
+                
+                #region Custom7 Skill
+
+                if (Settings.custom7Enabled)
+                    try
+                    {
+                        if (Gcd() &&
+                            (DateTime.Now - lastCustom7).TotalMilliseconds > Settings.custom7Cooldown.Value &&
+                            MonsterCheck(Settings.custom7TriggerRange, Settings.custom7MinAny, Settings.custom7MinRare,
+                                Settings.custom7MinUnique))
+                            if (player.HPPercentage <= (float)Settings.custom7Hpp / 100 ||
+                                player.MaxES > 0 && player.ESPercentage <
+                                (float)Settings.custom7Esp / 100)
+                            {
+                                Keyboard.KeyPress(Settings.custom7Key);
+                                lastCustom7 = DateTime.Now;
+                            }
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                #endregion
+                
+                #region Custom8 Skill
+
+                if (Settings.custom8Enabled)
+                    try
+                    {
+                        if (Gcd() &&
+                            (DateTime.Now - lastCustom8).TotalMilliseconds > Settings.custom8Cooldown.Value &&
+                            MonsterCheck(Settings.custom8TriggerRange, Settings.custom8MinAny, Settings.custom8MinRare,
+                                Settings.custom8MinUnique))
+                            if (player.HPPercentage <= (float)Settings.custom8Hpp / 100 ||
+                                player.MaxES > 0 && player.ESPercentage <
+                                (float)Settings.custom8Esp / 100)
+                            {
+                                Keyboard.KeyPress(Settings.custom8Key);
+                                lastCustom8 = DateTime.Now;
                             }
                     }
                     catch (Exception e)

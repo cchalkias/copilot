@@ -810,6 +810,70 @@ namespace CoPilot
             }
             
             
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom7Enabled ? green : red);
+                ImGui.PushID(33);
+                if (ImGui.TreeNodeEx("Custom7 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom7Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom7Enabled.Value);
+                    CoPilot.instance.Settings.custom7Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom7Key.Value, CoPilot.instance.Settings.custom7Key);
+                    CoPilot.instance.Settings.custom7Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom7Cooldown);
+                    CoPilot.instance.Settings.custom7TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom7TriggerRange);
+                    CoPilot.instance.Settings.custom7Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom7Hpp);
+                    CoPilot.instance.Settings.custom7Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom7Esp);
+                    CoPilot.instance.Settings.custom7MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom7MinAny);
+                    CoPilot.instance.Settings.custom7MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom7MinRare);
+                    CoPilot.instance.Settings.custom7MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom7MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+            
+            
+            try
+            {
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.custom8Enabled ? green : red);
+                ImGui.PushID(34);
+                if (ImGui.TreeNodeEx("Custom8 Skill (Use any Skill not Supported here.)", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.custom8Enabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.custom8Enabled.Value);
+                    CoPilot.instance.Settings.custom8Key.Value = ImGuiExtension.HotkeySelector(
+                        "Key: " + CoPilot.instance.Settings.custom8Key.Value, CoPilot.instance.Settings.custom8Key);
+                    CoPilot.instance.Settings.custom8Cooldown.Value =
+                        ImGuiExtension.IntSlider("Cooldown", CoPilot.instance.Settings.custom8Cooldown);
+                    CoPilot.instance.Settings.custom8TriggerRange.Value = ImGuiExtension.IntSlider("Trigger Range",
+                        CoPilot.instance.Settings.custom8TriggerRange);
+                    CoPilot.instance.Settings.custom8Hpp.Value =
+                        ImGuiExtension.IntSlider("HP%", CoPilot.instance.Settings.custom8Hpp);
+                    CoPilot.instance.Settings.custom8Esp.Value =
+                        ImGuiExtension.IntSlider("ES%", CoPilot.instance.Settings.custom8Esp);
+                    CoPilot.instance.Settings.custom8MinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.custom8MinAny);
+                    CoPilot.instance.Settings.custom8MinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.custom8MinRare);
+                    CoPilot.instance.Settings.custom8MinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
+                        CoPilot.instance.Settings.custom8MinUnique);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+            
+            
             
 
             try

@@ -365,6 +365,34 @@ namespace CoPilot
         
         #endregion
         
+        #region Custom7 Skill
+
+        public ToggleNode custom7Enabled = new ToggleNode(false);
+        public RangeNode<int> custom7TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom7MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom7MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom7MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom7Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom7Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom7Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom7Key = new HotkeyNode(Keys.NumPad4);
+        
+        #endregion
+        
+        #region Custom8 Skill
+
+        public ToggleNode custom8Enabled = new ToggleNode(false);
+        public RangeNode<int> custom8TriggerRange = new RangeNode<int>(500, 100, 2000);
+        public RangeNode<int> custom8MinAny = new RangeNode<int>(1, 0, 50);
+        public RangeNode<int> custom8MinRare = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom8MinUnique = new RangeNode<int>(0, 0, 50);
+        public RangeNode<int> custom8Hpp = new RangeNode<int>(100, 0, 100);
+        public RangeNode<int> custom8Esp = new RangeNode<int>(0, 0, 100);
+        public RangeNode<int> custom8Cooldown = new RangeNode<int>(4000, 1000, 10000);
+        public HotkeyNode custom8Key = new HotkeyNode(Keys.NumPad4);
+        
+        #endregion
+        
         #region Brand Recall
 
         public ToggleNode brandRecallEnabled = new ToggleNode(false);

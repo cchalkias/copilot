@@ -130,12 +130,7 @@ namespace CoPilot
 
             if (!actorSkill.Stats.TryGetValue(GameStat.ManaCost, out var manaCost))
                 manaCost = 0;
-
-            if (CoPilot.instance.player.CurMana >= manaCost)
-                return true;
-            if (!CoPilot.instance.localPlayer.Stats.TryGetValue(GameStat.VirtualEnergyShieldProtectsMana,
-                out var hasEldritchBattery))
-                hasEldritchBattery = 0;
+            return CoPilot.instance.player.CurMana >= manaCost;
 
             return hasEldritchBattery > 0 && CoPilot.instance.player.CurES > manaCost;
         }
