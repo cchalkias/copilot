@@ -261,7 +261,7 @@ namespace CoPilot
                         CoPilot.instance.Settings.autoSummonEnabled.Value);
                     CoPilot.instance.Settings.autoGolemEnabled.Value = ImGuiExtension.Checkbox("Auto Golem",
                         CoPilot.instance.Settings.autoGolemEnabled.Value);
-                    CoPilot.instance.Settings.autoHolyRelictEnabled.Value = ImGuiExtension.Checkbox("Auto Holy Relics",
+                    CoPilot.instance.Settings.autoHolyRelictEnabled.Value = ImGuiExtension.Checkbox("Auto Holy Relict",
                         CoPilot.instance.Settings.autoHolyRelictEnabled.Value);
                     CoPilot.instance.Settings.autoZombieEnabled.Value = ImGuiExtension.Checkbox("Auto Zombies",
                         CoPilot.instance.Settings.autoZombieEnabled.Value);
@@ -338,13 +338,15 @@ namespace CoPilot
                         ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.bloodRageMinRare);
                     CoPilot.instance.Settings.bloodRageMinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique",
                         CoPilot.instance.Settings.bloodRageMinUnique);
+                    CoPilot.instance.Settings.bloodRageReqFullHealth.Value = ImGuiExtension.Checkbox(
+                        "Only use on full health",
+                        CoPilot.instance.Settings.bloodRageReqFullHealth.Value);
                 }
             }
             catch (Exception e)
             {
                 CoPilot.instance.LogError(e.ToString());
             }
-
 
             try
             {
@@ -501,12 +503,14 @@ namespace CoPilot
                 // Phaserun
                 ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.phaserunEnabled ? green : red);
                 ImGui.PushID(11);
-                if (ImGui.TreeNodeEx("Phaserun / WitherStep", collapsingHeaderFlags))
+                if (ImGui.TreeNodeEx("Phaserun / Witherstep", collapsingHeaderFlags))
                 {
                     CoPilot.instance.Settings.phaserunEnabled.Value =
                         ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.phaserunEnabled.Value);
-                    CoPilot.instance.Settings.phaserunUseLifeTap.Value = ImGuiExtension.Checkbox("LifeTap Mode",
+                    CoPilot.instance.Settings.phaserunUseLifeTap.Value = ImGuiExtension.Checkbox("Lifetap mode",
                         CoPilot.instance.Settings.phaserunUseLifeTap.Value);
+                    CoPilot.instance.Settings.phaserunUseWhileAttacking.Value = ImGuiExtension.Checkbox("Use while attacking / channelling",
+                        CoPilot.instance.Settings.phaserunUseWhileAttacking.Value);
                 }
             }
             catch (Exception e)
@@ -616,7 +620,6 @@ namespace CoPilot
             {
                 CoPilot.instance.LogError(e.ToString());
             }
-
 
             try
             {
@@ -1107,6 +1110,56 @@ namespace CoPilot
                     CoPilot.instance.Settings.plagueBearer.Value = ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.plagueBearer.Value);
                     CoPilot.instance.Settings.plagueBearerRange.Value = ImGuiExtension.IntSlider("Enemy Range", CoPilot.instance.Settings.plagueBearerRange);
                     CoPilot.instance.Settings.plagueBearerMinEnemys.Value = ImGuiExtension.IntSlider("Min Enemy Any", CoPilot.instance.Settings.plagueBearerMinEnemys);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+
+            try
+            {
+                // Focus
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.FocusEnabled ? green : red);
+                ImGui.PushID(27);
+                if (ImGui.TreeNodeEx("Focus", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.FocusEnabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.FocusEnabled.Value);
+                    CoPilot.instance.Settings.FocusRange.Value =
+                        ImGuiExtension.IntSlider("Range", CoPilot.instance.Settings.FocusRange);
+                    CoPilot.instance.Settings.FocusMinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.FocusMinAny);
+                    CoPilot.instance.Settings.FocusMinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.FocusMinRare);
+                    CoPilot.instance.Settings.FocusMinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique", CoPilot.instance.Settings.FocusMinUnique);
+                    CoPilot.instance.Settings.FocusCooldown.Value = ImGuiExtension.IntSlider("cooldown in milliseconds", CoPilot.instance.Settings.FocusCooldown);
+                }
+            }
+            catch (Exception e)
+            {
+                CoPilot.instance.LogError(e.ToString());
+            }
+
+             try
+            {
+                // Corrupting Fever
+                ImGui.PushStyleColor(ImGuiCol.Header, CoPilot.instance.Settings.CorruptingFeverEnabled ? green : red);
+                ImGui.PushID(27);
+                if (ImGui.TreeNodeEx("Corrupting Fever", collapsingHeaderFlags))
+                {
+                    CoPilot.instance.Settings.CorruptingFeverEnabled.Value =
+                        ImGuiExtension.Checkbox("Enabled", CoPilot.instance.Settings.CorruptingFeverEnabled.Value);
+                    CoPilot.instance.Settings.CorruptingFeverRange.Value =
+                        ImGuiExtension.IntSlider("Range", CoPilot.instance.Settings.CorruptingFeverRange);
+                    CoPilot.instance.Settings.CorruptingFeverMinAny.Value =
+                        ImGuiExtension.IntSlider("min Enemy Any", CoPilot.instance.Settings.CorruptingFeverMinAny);
+                    CoPilot.instance.Settings.CorruptingFeverMinRare.Value =
+                        ImGuiExtension.IntSlider("min Enemy Rare", CoPilot.instance.Settings.CorruptingFeverMinRare);
+                    CoPilot.instance.Settings.CorruptingFeverMinUnique.Value = ImGuiExtension.IntSlider("min Enemy Unique", CoPilot.instance.Settings.CorruptingFeverMinUnique);
+                    CoPilot.instance.Settings.CorruptingFeverReqFullHealth.Value = ImGuiExtension.Checkbox(
+                        "Only use on 90%+ health",
+                        CoPilot.instance.Settings.CorruptingFeverReqFullHealth.Value);
                 }
             }
             catch (Exception e)
